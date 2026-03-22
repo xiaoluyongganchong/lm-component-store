@@ -1,0 +1,111 @@
+@import "./variables";
+@import "./reboot";
+@import "./mixin";
+@import "../components/Button/style";
+@import "../components/Alert/style";
+@import "../components/Menu/style";
+
+:root {
+  /* base colors */
+  --white: #{$white};
+  --black: #{$black};
+
+  /* grays */
+  --gray-100: #{$gray-100};
+  --gray-200: #{$gray-200};
+  --gray-300: #{$gray-300};
+  --gray-400: #{$gray-400};
+  --gray-500: #{$gray-500};
+  --gray-600: #{$gray-600};
+  --gray-700: #{$gray-700};
+  --gray-800: #{$gray-800};
+  --gray-900: #{$gray-900};
+
+  /* palette */
+  --blue: #{$blue};
+  --indigo: #{$indigo};
+  --purple: #{$purple};
+  --pink: #{$pink};
+  --red: #{$red};
+  --orange: #{$orange};
+  --yellow: #{$yellow};
+  --green: #{$green};
+  --teal: #{$teal};
+  --cyan: #{$cyan};
+
+  /* semantic */
+  --primary: #{$primary};
+  --secondary: #{$secondary};
+  --success: #{$success};
+  --info: #{$info};
+  --warning: #{$warning};
+  --danger: #{$danger};
+  --light: #{$light};
+  --dark: #{$dark};
+
+  /* fonts */
+  --font-family-sans-serif: #{$font-family-sans-serif};
+  --font-family-monospace: #{$font-family-monospace};
+  --font-family-base: #{$font-family-base};
+
+  /* font sizes */
+  --font-size-base: #{$font-size-base};
+  --font-size-lg: #{$font-size-lg};
+  --font-size-sm: #{$font-size-sm};
+
+  /* font weights */
+  --font-weight-lighter: #{$font-weight-lighter};
+  --font-weight-light: #{$font-weight-light};
+  --font-weight-normal: #{$font-weight-normal};
+  --font-weight-bold: #{$font-weight-bold};
+  --font-weight-bolder: #{$font-weight-bolder};
+  --font-weight-base: #{$font-weight-base};
+
+  /* line heights */
+  --line-height-base: #{$line-height-base};
+  --line-height-lg: #{$line-height-lg};
+  --line-height-sm: #{$line-height-sm};
+
+  /* headings */
+  --h1-font-size: #{$h1-font-size};
+  --h2-font-size: #{$h2-font-size};
+  --h3-font-size: #{$h3-font-size};
+  --h4-font-size: #{$h4-font-size};
+  --h5-font-size: #{$h5-font-size};
+  --h6-font-size: #{$h6-font-size};
+
+  /* links */
+  --link-color: #{$link-color};
+  --link-decoration: #{$link-decoration};
+  --link-hover-color: #{$link-hover-color};
+  --link-hover-decoration: #{$link-hover-decoration};
+
+  /* body */
+  --body-bg: #{$body-bg};
+  --body-color: #{$body-color};
+}
+
+/* 从原 index.css 迁移的全局基础样式（并改用变量体系） */
+body {
+  margin: 0;
+  font-family: var(--font-family-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--body-bg);
+  color: var(--body-color);
+}
+
+code {
+  font-family: var(--font-family-monospace);
+}
+
+a {
+  color: var(--link-color);
+  text-decoration: var(--link-decoration);
+}
+
+a:hover {
+  color: var(--link-hover-color);
+  text-decoration: var(--link-hover-decoration);
+}
+
