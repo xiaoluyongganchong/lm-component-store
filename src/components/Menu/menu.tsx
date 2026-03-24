@@ -15,11 +15,15 @@ export interface MenuProps {
 }
 
 export interface TMenuContext {
+  mode: string;
   index: number;
   onSelect?: SelectCallback;
 }
 
-export const MenuContext = createContext<TMenuContext>({ index: 0 });
+export const MenuContext = createContext<TMenuContext>({
+  index: 0,
+  mode: ''
+});
 
 const Menu = ({
   className,
@@ -44,7 +48,8 @@ const Menu = ({
   };
   const passedContext: TMenuContext = {
     index: currentActive || 0,
-    onSelect: handleClick
+    onSelect: handleClick,
+    mode: ''
   };
 
   const renderChildren = () => {

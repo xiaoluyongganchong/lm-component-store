@@ -36,11 +36,16 @@
     .submenu-title {
       display: flex;
       align-items: center;
+      cursor: pointer;
+      user-select: none;
     }
 
     .arrow-icon {
+      display: inline-flex;
       transition: transform 0.25s ease-in-out;
-      margin-left: 3px;
+      margin-left: 6px;
+      font-size: 12px;
+      transform-origin: center;
     }
 
     &:hover {
@@ -63,9 +68,14 @@
   }
 
   .viking-submenu {
+    display: none;
     list-style: none;
     padding-left: 0;
     white-space: nowrap;
+
+    &.menu-opened {
+      display: block;
+    }
 
     .menu-item {
       padding: $menu-item-padding-y $menu-item-padding-x;
@@ -112,4 +122,40 @@
       border-left: $menu-item-active-border-width solid $menu-item-active-color;
     }
   }
+
+  .submenu-item .viking-submenu.menu-opened {
+    position: relative;
+    left: 0;
+    top: 0;
+    margin-top: 8px;
+    border: $menu-border-width solid $menu-border-color;
+    box-shadow: $submenu-box-shadow;
+    background: $white;
+  }
+}
+
+.zoom-in-top-enter {
+  opacity: 0;
+  transform: scaleY(0);
+  transform-origin: top center;
+}
+
+.zoom-in-top-enter-active {
+  opacity: 1;
+  transform: scaleY(1);
+  transform-origin: top center;
+  transition: opacity 200ms ease, transform 200ms ease;
+}
+
+.zoom-in-top-exit {
+  opacity: 1;
+  transform: scaleY(1);
+  transform-origin: top center;
+}
+
+.zoom-in-top-exit-active {
+  opacity: 0;
+  transform: scaleY(0);
+  transform-origin: top center;
+  transition: opacity 200ms ease, transform 200ms ease;
 }

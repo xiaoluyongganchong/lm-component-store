@@ -1,42 +1,41 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 
 import './App.css';
 
-import Button, { ButtonType, ButtonSize } from './components/Button/button'
-import Alert, { AlertType } from './components/Alert/alert';
-import Menu from './components/Menu/menu';
-import MenuItem from './components/Menu/menuItem';
+import Tabs from './components/Tabs/tabs';
+import TabsItem from './components/Tabs/tabsItem';
+import Icon from './components/Icon/icon';
 
 
 function App() {
 
   return (
     <>
-       <Menu defaultIndex={0}>
-        <MenuItem>
-          1
-        </MenuItem>
-        <MenuItem>
-          2
-        </MenuItem>
-        <MenuItem>
-          3
-        </MenuItem>
-        <MenuItem>
-          4
-        </MenuItem>
-      </Menu>
-
-       <div className="App">
-      <Button btnType={ButtonType.Default} size={ButtonSize.large}>button</Button>
-      <Button btnType={ButtonType.Link} size={ButtonSize.small} href='www.baidu.com'>baidu</Button>
-      <Alert title='紧张吗' children='有点'></Alert>
-      <Alert title='271199' closable></Alert>
-      <Alert title='你看球吗' children='不看'></Alert>
-      <Alert type={AlertType.Danger}>271199</Alert>
-    </div>
+      <Icon icon={faCoffee} size="10x" theme="danger" />
+      <Tabs defaultIndex="0" type="card">
+        <TabsItem label="橹穆">
+          271199
+        </TabsItem>
+        <TabsItem label="杰丞">
+          法法法
+        </TabsItem>
+        <TabsItem label="豚馒">
+          两个可爱萌物
+        </TabsItem>
+      </Tabs>
+      <Tabs defaultIndex="1" type="line">
+        <TabsItem label="橹穆">
+          271199
+        </TabsItem>
+        <TabsItem label="杰丞">
+          法法法
+        </TabsItem>
+        <TabsItem label="豚馒">
+          两个可爱萌物
+        </TabsItem>
+      </Tabs>
     </>
-   
   );
 }
 
