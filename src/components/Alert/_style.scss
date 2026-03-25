@@ -39,6 +39,11 @@
   line-height: 1;
   color: inherit;
   cursor: pointer;
+
+  .lm-icon {
+    font-size: 12px;
+    pointer-events: none;
+  }
 }
 
 .viking-alert-success {

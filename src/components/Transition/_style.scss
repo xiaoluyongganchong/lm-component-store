@@ -1,0 +1,103 @@
+.zoom-in-top-enter {
+  opacity: 0;
+  transform: scaleY(0);
+  transform-origin: top center;
+}
+
+.zoom-in-top-enter-active {
+  opacity: 1;
+  transform: scaleY(1);
+  transform-origin: top center;
+  transition: opacity 200ms ease, transform 200ms ease;
+}
+
+.zoom-in-top-exit {
+  opacity: 1;
+  transform: scaleY(1);
+  transform-origin: top center;
+}
+
+.zoom-in-top-exit-active {
+  opacity: 0;
+  transform: scaleY(0);
+  transform-origin: top center;
+  transition: opacity 200ms ease, transform 200ms ease;
+}
+
+.zoom-in-left-enter {
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.zoom-in-left-enter-active {
+  opacity: 1;
+  transform: scaleX(1);
+  transform-origin: left center;
+  transition: opacity 200ms ease, transform 200ms ease;
+}
+
+.zoom-in-left-exit {
+  opacity: 1;
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+.zoom-in-left-exit-active {
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: opacity 200ms ease, transform 200ms ease;
+}
+
+.zoom-in-bottom-enter {
+  opacity: 0;
+  transform: scaleY(0);
+  transform-origin: bottom center;
+}
+
+.zoom-in-bottom-enter-active {
+  opacity: 1;
+  transform: scaleY(1);
+  transform-origin: bottom center;
+  transition: opacity 200ms ease, transform 200ms ease;
+}
+
+.zoom-in-bottom-exit {
+  opacity: 1;
+  transform: scaleY(1);
+  transform-origin: bottom center;
+}
+
+.zoom-in-bottom-exit-active {
+  opacity: 0;
+  transform: scaleY(0);
+  transform-origin: bottom center;
+  transition: opacity 200ms ease, transform 200ms ease;
+}
+
+.zoom-in-right-enter {
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: right center;
+}
+
+.zoom-in-right-enter-active {
+  opacity: 1;
+  transform: scaleX(1);
+  transform-origin: right center;
+  transition: opacity 200ms ease, transform 200ms ease;
+}
+
+.zoom-in-right-exit {
+  opacity: 1;
+  transform: scaleX(1);
+  transform-origin: right center;
+}
+
+.zoom-in-right-exit-active {
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: opacity 200ms ease, transform 200ms ease;
+}

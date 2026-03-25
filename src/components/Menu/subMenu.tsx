@@ -8,11 +8,11 @@ import React, {
   useState
 } from 'react';
 import classNames from 'classnames';
-import { CSSTransition } from 'react-transition-group';
 import { MenuContext } from './menu';
 import type { MenuItemProps } from './menuItem';
 import MenuItem from './menuItem';
 import Icon from '../Icon/icon';
+import Transition from '../Transition/tansition';
 
 export interface SubMenuProps {
   /** 由 Menu 注入，一般不必手写 */
@@ -42,6 +42,16 @@ export const SubMenu: FC<SubMenuProps> = ({
     context.mode === 'vertical' && openedSubMenus.includes(index);
   const [isOpen, setIsOpen] = useState(isOpenedByDefault);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const firstRenderRef = useRef(true);
+
+  // 当菜单项被点击后（context.index 变化），把当前子菜单收起来
+  useEffect(() => {
+    if (firstRenderRef.current) {
+      firstRenderRef.current = false;
+      return;
+    }
+    setIsOpen(false);
+  }, [context.index]);
 
   useEffect(() => {
     return () => {
@@ -116,16 +126,17 @@ export const SubMenu: FC<SubMenuProps> = ({
         {title}
         <Icon icon="angle-down" className="arrow-icon" />
       </div>
-      <CSSTransition
+      <Transition
         in={isOpen}
         timeout={200}
-        classNames="zoom-in-top"
+        animation="zoom-in-top"
+        wrapper
         unmountOnExit
       >
         <ul className={classNames('viking-submenu', { 'menu-opened': isOpen })}>
           {renderChildren()}
         </ul>
-      </CSSTransition>
+      </Transition>
     </li>
   );
 };
