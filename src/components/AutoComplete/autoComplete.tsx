@@ -1,6 +1,9 @@
 import React, { ChangeEvent, ReactNode, useEffect, useRef, useState } from 'react';
 import Input, { InputProps } from '../Input/input';
 import Icon from '../Icon/icon'
+import useDebounce from '../../hooks/useDebounce';
+import classNames from 'classnames';
+import useClickOutside from '../../hooks/useClickOutside';
 
 
 export type AutoCompleteOptionKey = string | number;
@@ -26,6 +29,9 @@ export interface AutoCompleteProps<T>
   renderOption?: (item: T) => ReactNode;
   /** 候选项的稳定 key（可选，建议对象候选提供） */
   getOptionKey?: (item: T) => AutoCompleteOptionKey;
+
+  /** 防抖延迟（ms），用于减少频繁请求 */
+  debounceDelay?: number;
 }
 
 const labelToString = (label: ReactNode | string) => {
@@ -42,17 +48,25 @@ const AutoComplete = <T,>(props: AutoCompleteProps<T>) => {
     getOptionLabel,
     renderOption,
     getOptionKey,
+    debounceDelay,
     ...inputProps
   } = props;
 
   const [suggestions, setSuggestions] = useState<T[]>([]);
   const suppressNextFetchRef = useRef(false);
-  const [loading,setLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [highLightIndex, setHighLightIndex] = useState(-1)
+  const triggerSearch = useRef(false)
+  const componentRef = useRef<HTMLDivElement>(null)
+  useClickOutside(componentRef, () => { setSuggestions([]) })
+
+  const debouncedInputValue = useDebounce(inputValue, debounceDelay ?? 300);
 
   useEffect(() => {
-    const q = inputValue.trim();
-    if (!q) {
+    const q = debouncedInputValue.trim();
+    if (!q && triggerSearch.current) {
       setSuggestions([]);
+      setLoading(false);
       return;
     }
 
@@ -63,16 +77,25 @@ const AutoComplete = <T,>(props: AutoCompleteProps<T>) => {
 
     const result = fetchSuggestion(q);
     if (result instanceof Promise) {
-      setLoading(true)
-      result.then((data) => setSuggestions(data));
-      setLoading(false)
+      setLoading(true);
+      result
+        .then((data) => {
+          setSuggestions(data);
+        })
+        .catch(() => {
+          setSuggestions([]);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     } else {
       setSuggestions(result);
     }
-  }, [fetchSuggestion, inputValue]);
+  }, [fetchSuggestion, debouncedInputValue]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     onInputChange(e.target.value);
+    triggerSearch.current = true
   };
 
   const handleSelect = (item: T) => {
@@ -82,19 +105,54 @@ const AutoComplete = <T,>(props: AutoCompleteProps<T>) => {
     // 选中后把 label 写回 inputValue，但避免紧接着触发一次 fetch
     suppressNextFetchRef.current = true;
     onInputChange(labelToString(getOptionLabel(item)));
+    triggerSearch.current = false
   };
 
+  const highLight = (index:number) => {
+    if (index < 0) {
+      index = 0
+    }
+    if (index >= suggestions.length) {
+      index = suggestions.length - 1
+    }
+    setHighLightIndex(index)
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    switch (e.keyCode) {
+      case 13:
+        if (suggestions.length > 0 && highLightIndex >= 0) {
+          handleSelect(suggestions[highLightIndex])
+        }
+        break
+      case 38:
+        e.preventDefault()
+        highLight(highLightIndex - 1)
+        break
+      case 40:
+        e.preventDefault()
+        highLight(highLightIndex + 1)
+        break
+      case 27:
+        setSuggestions([])
+        break
+    }
+  }
+
   return (
-    <div className="lm-suto-complete">
-      <Input {...inputProps} value={inputValue} onChange={handleChange} />
+    <div className="lm-suto-complete" ref={ componentRef }>
+      <Input {...inputProps} value={inputValue} onChange={handleChange} onKeyDown={handleKeyDown}/>
       {loading && <ul><Icon icon='spinner' spin></Icon></ul>}
       {suggestions.length > 0 && (
         <ul>
           {suggestions.map((item, index) => {
             const label = labelToString(getOptionLabel(item));
             const key = getOptionKey ? getOptionKey(item) : label || index;
+            const cname = classNames('suggestions-item', {
+              'item-hightlighted':index === highLightIndex
+            })
             return (
-              <li key={key} onClick={() => handleSelect(item)}>
+              <li key={key} className={cname} onClick={() => handleSelect(item)}>
                 {renderOption ? renderOption(item) : label}
               </li>
             );

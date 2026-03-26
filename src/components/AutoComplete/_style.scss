@@ -1,0 +1,47 @@
+.lm-suto-complete {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+
+  // 下拉列表容器：去掉默认列表样式、并悬浮显示
+  > ul {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    background: $white;
+    border: $border-width solid $border-color;
+    border-top: 0;
+    box-shadow: $menu-box-shadow;
+
+    max-height: 240px;
+    overflow-y: auto;
+  }
+
+  // 下拉条目：移除默认 li 列表符号 + 做交互样式
+  .suggestions-item {
+    list-style: none;
+    cursor: pointer;
+    user-select: none;
+
+    padding: $menu-item-padding-y $menu-item-padding-x;
+    transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+
+    &:hover {
+      background: $gray-100;
+    }
+  }
+
+  // 选中高亮
+  .item-hightlighted {
+    background: rgba($primary, 0.12);
+    color: $primary;
+  }
+}
+

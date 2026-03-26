@@ -25,8 +25,16 @@ const meta = {
   tags: ['autodocs'],
   args: {
     placeholder: '请输入内容',
+    debounceDelay: 200,
     fetchSuggestion: (str: string) =>
-      pool.filter((item) => item.label.toLowerCase().includes(str.toLowerCase())),
+      new Promise<Option[]>((resolve) => {
+        // 用 setTimeout 模拟网络请求，便于验证 loading 图标
+        setTimeout(() => {
+          resolve(
+            pool.filter((item) => item.label.toLowerCase().includes(str.toLowerCase()))
+          );
+        }, 500);
+      }),
     getOptionLabel: (item: Option) => item.label,
     getOptionKey: (item: Option) => item.id,
     renderOption: (item: Option) => <span>{item.label}</span>,
