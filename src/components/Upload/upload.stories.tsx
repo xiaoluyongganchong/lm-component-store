@@ -1,0 +1,35 @@
+import Upload, { UplaodFile, UploadProps } from './upload'
+
+const meta = {
+  title: 'Components/Upload',
+  component: Upload,
+  tags: ['autodocs']
+}
+export default meta
+
+const defaultFileList: UplaodFile[] = [
+  { uid: '123', size: 1234, name: 'hello.md', status: 'uploading', percent: 30 },
+  { uid: '122', size: 1234, name: 'xyz.md', status: 'success', percent: 30 },
+  { uid: '121', size: 1234, name: 'haha.md', status: 'error', percent: 30 }
+]
+
+type Story = { args?: UploadProps }
+
+export const Basic: Story = {
+  args: {
+    action: 'https://jsonplaceholder.typicode.com/posts',
+    beforeUpload: (file) => {
+      console.log('[beforeUpload]', file.name, file.size)
+      const ok = file.size < 1024 * 1024
+      console.log('[beforeUpload result]', ok)
+      return ok
+    },
+    defaultFileList:defaultFileList,
+    onChange: (file) => {
+      console.log('[onChange]', file.name)
+    },
+    onProgress: (percentage, file) => console.log('[progress]', percentage, file.name),
+    onSuccess: (data, file) => console.log('[success]', file.name, data),
+    onError: (err, file) => console.log('[error]', file.name, err),
+  }
+}

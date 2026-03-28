@@ -39,6 +39,7 @@ const Button = ({
   className,
   children,
   href,
+  ...restProps
 }: ButtonProps) => {
   const classes = classNames('btn', className, {
     [`btn-${btnType}`]: btnType,
@@ -48,14 +49,22 @@ const Button = ({
 
   if (btnType === ButtonType.Link) {
     return (
-      <a className={classes} href={href}>
+      <a
+        className={classes}
+        href={href}
+        {...(restProps as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
+      >
         {children}
       </a>
     );
   }
 
   return (
-    <button className={classes} disabled={disabled}>
+    <button
+      className={classes}
+      disabled={disabled}
+      {...(restProps as React.ButtonHTMLAttributes<HTMLButtonElement>)}
+    >
       {children}
     </button>
   );

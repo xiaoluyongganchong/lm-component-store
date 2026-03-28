@@ -1,3 +1,4 @@
+import { JSX } from 'react/jsx-runtime';
 import Input, { InputProps } from './input';
 import React, { useState } from 'react';
 
@@ -22,8 +23,17 @@ const meta = {
 export default meta;
 
 type Story = {
-  args?: Partial<InputProps>;
-  render?: (args: Partial<InputProps>) => React.ReactElement;
+  args?: {
+    placeholder?: string;
+    disabled?: boolean;
+    size?: 'lg' | 'sm';
+    icon?: string;
+    prepend?: string;
+    append?: string;
+    defaultValue?: string;
+    value?: string;
+  };
+  render?: (args: JSX.IntrinsicAttributes & InputProps) => JSX.Element;
 };
 
 export const Default: Story = {};
@@ -62,7 +72,7 @@ export const Controlled: Story = {
     value: '初始值',
     placeholder:'输入框'
   },
-  render: (args) => {
+  render: (args: JSX.IntrinsicAttributes & InputProps) => {
     const [val, setVal] = useState(args.value ?? '')
     return (
       <Input

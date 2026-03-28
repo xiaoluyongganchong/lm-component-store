@@ -54,14 +54,14 @@
     ]
   },
   "devDependencies": {
-    "storybook": "^10.3.3",
-    "@storybook/react-webpack5": "^10.3.3",
-    "@storybook/preset-create-react-app": "^10.3.3",
     "@storybook/addon-a11y": "^10.3.3",
     "@storybook/addon-docs": "^10.3.3",
     "@storybook/addon-onboarding": "^10.3.3",
-    "webpack": "^5.105.4",
+    "@storybook/preset-create-react-app": "^10.3.3",
+    "@storybook/react-webpack5": "^10.3.3",
+    "eslint-plugin-storybook": "^10.3.3",
     "prop-types": "^15.8.1",
-    "eslint-plugin-storybook": "^10.3.3"
+    "storybook": "^10.3.3",
+    "webpack": "^5.105.4"
   }
 }

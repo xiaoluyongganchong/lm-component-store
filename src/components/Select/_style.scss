@@ -1,0 +1,193 @@
+.lm-select {
+  position: relative;
+  width: 100%;
+  --select-soft-blue: #e6f4ff;
+  --select-blue: #1677ff;
+  --select-blue-border: #91caff;
+
+  .lm-select-control {
+    position: relative;
+    width: 100%;
+    cursor: pointer;
+  }
+
+  .lm-select-input {
+    width: 100%;
+    height: 36px;
+    padding: 8px 30px 8px 12px;
+    border: $border-width solid var(--select-blue-border);
+    border-radius: $border-radius;
+    background: $white;
+    color: $body-color;
+    padding-right: 30px;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+      box-shadow: none;
+      border-color: var(--select-blue-border);
+    }
+  }
+
+  .lm-select-tags {
+    min-height: 36px;
+    border: $border-width solid var(--select-blue-border);
+    border-radius: $border-radius;
+    background: $white;
+    padding: 4px 30px 4px 8px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    cursor: pointer;
+  }
+
+  .lm-select-tag {
+    display: inline-flex;
+    align-items: center;
+    height: 22px;
+    padding: 0 6px 0 8px;
+    border-radius: 3px;
+    background: var(--select-soft-blue);
+    color: var(--select-blue);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .lm-select-tag-remove {
+    margin-left: 4px;
+    border: none;
+    background: transparent;
+    color: var(--select-blue);
+    font-size: 12px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .lm-select-placeholder {
+    color: $gray-600;
+    font-size: $font-size-base;
+  }
+
+  .lm-select-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%) rotate(0deg);
+    transform-origin: center;
+    color: $gray-600;
+    font-size: 12px;
+    line-height: 12px;
+    transition: transform 0.2s ease;
+    pointer-events: none;
+  }
+
+  .lm-select-dropdown {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(100% + 4px);
+    z-index: 1000;
+    margin: 0;
+    padding: 4px 0;
+    list-style: none;
+    background: $white;
+    border: $border-width solid $border-color;
+    border-radius: $border-radius;
+    box-shadow: $menu-box-shadow;
+
+    opacity: 0;
+    transform: translateY(-6px);
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+  }
+
+  .lm-select-item {
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    color: $body-color;
+
+    &:hover {
+      background: var(--select-soft-blue);
+      color: var(--select-blue);
+    }
+
+    &.is-active {
+      background: var(--select-soft-blue);
+      color: var(--select-blue);
+      font-weight: 600;
+    }
+
+    &.is-highlighted {
+      background: #d6ecff;
+      color: var(--select-blue);
+      box-shadow: inset 3px 0 0 var(--select-blue), inset 0 0 0 1px rgba(22, 119, 255, 0.25);
+    }
+
+    &.is-active.is-highlighted {
+      background: #c7e6ff;
+    }
+
+    &.is-disabled {
+      color: $gray-500;
+      cursor: not-allowed;
+      background: transparent;
+    }
+  }
+
+  .lm-select-check-icon {
+    color: var(--select-blue);
+    font-size: 13px;
+    margin-left: 8px;
+    flex-shrink: 0;
+  }
+
+  .lm-select-highlight-indicator {
+    color: var(--select-blue);
+    font-size: 12px;
+    margin-left: 8px;
+    flex-shrink: 0;
+    font-weight: 700;
+  }
+
+  &.is-open {
+    .lm-select-input,
+    .lm-select-tags {
+      border-color: var(--select-blue-border);
+      box-shadow: 0 0 0 2px rgba(22, 119, 255, 0.12);
+    }
+  }
+
+  &.is-open {
+    .lm-select-arrow {
+      transform: translateY(-50%) rotate(180deg);
+    }
+
+    .lm-select-dropdown {
+      opacity: 1;
+      transform: translateY(0);
+      visibility: visible;
+      pointer-events: auto;
+    }
+  }
+
+  &.is-disabled {
+    .lm-select-control {
+      cursor: not-allowed;
+    }
+
+    .lm-select-input {
+      cursor: not-allowed;
+    }
+  }
+}
+
