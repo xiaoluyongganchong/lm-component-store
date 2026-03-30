@@ -31,5 +31,12 @@ export const Basic: Story = {
     onProgress: (percentage, file) => console.log('[progress]', percentage, file.name),
     onSuccess: (data, file) => console.log('[success]', file.name, data),
     onError: (err, file) => console.log('[error]', file.name, err),
+    name: 'fileNme',
+    data: { key: 'value' },
+    headers: { 'x-pwofia-by': 'lm' },
+    accept: '.jpg',
+    multiple: true,
+    children: '上传文件',
+    drag:true
   }
 }

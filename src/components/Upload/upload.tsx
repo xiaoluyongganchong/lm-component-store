@@ -2,6 +2,7 @@ import React,{ChangeEvent, useRef, useState} from "react";
 import Button, { ButtonType } from "../Button/button";
 import UploadList from "./uploadList";
 import axios from "axios";
+import Dragger from "./dragger";
 
 export interface UploadProps {
   action: string
@@ -12,6 +13,14 @@ export interface UploadProps {
   beforeUpload?: (file: File) => boolean | Promise<File>
   onChange?: (file: File) => void
   onRemove?: (file: UplaodFile) => void
+  headers?: { [key: string]: any }
+  name?: string
+  data?: { [key: string]: any }
+  withCredentials?: boolean
+  accept?: string
+  multiple?: boolean
+  children?: React.ReactNode
+  drag?: boolean
 }
 
 export type UploadFileStatus = 'ready' | 'uploading' | 'success' | 'error'
@@ -36,10 +45,19 @@ export const Upload = ({
   onSuccess,
   onError,
   onChange,
-  onRemove
+  onRemove,
+  headers,
+  name = 'file',
+  data,
+  withCredentials,
+  accept,
+  multiple,
+  children,
+  drag
 }: UploadProps) => {
 
   const fileInput = useRef<HTMLInputElement>(null)
+  const uidSeq = useRef(0)
   const [fileList, setFileList] = useState<UplaodFile[]>(defaultFileList || [])
   
   const UploadFileList = (uploadFile: UplaodFile, uploadObj: Partial<UplaodFile>) => {
@@ -92,35 +110,41 @@ export const Upload = ({
   }
 
   const post = (file: File) => {
+    uidSeq.current += 1
     let _file: UplaodFile = {
-      uid: Date.now() + 'upload-file',
-      status: 'ready',
+      uid: `${Date.now()}-${uidSeq.current}-${file.name}`,
+      status: 'uploading',
       name: file.name,
       size: file.size,
       percent: 0,
       raw:file
     }
-    setFileList([_file,...fileList])
+    setFileList(prevList => {
+      return [_file,...prevList]
+    })
     const formData = new FormData()
-      
-      formData.append(file.name, file)
+    formData.append(name || 'file', file)
+    if (data) {
+      Object.keys(data).forEach(key => {
+        formData.append(key,data[key]) //?
+      })
+    }
       axios.post(action, formData, {
-        headers: {
-          'Content-Type':'multiple/form-data'
-        },
         onUploadProgress: (e) => {
-          const total = e.total ?? e.loaded ?? 1
-          let percentage = Math.round((e.loaded * 100) / total) || 0
-          if (percentage < 100) {
-            UploadFileList(_file,{percent:percentage,status:'uploading'})
-            if (onProgress) {
-              onProgress(percentage,file)
-            }
+          const total = e.total && e.total > 0 ? e.total : e.loaded || 1
+          let percentage = Math.round((e.loaded * 100) / total)
+          if (!Number.isFinite(percentage)) {
+            percentage = 0
+          }
+          percentage = Math.min(100, Math.max(0, percentage))
+          UploadFileList(_file, { percent: percentage, status: 'uploading' })
+          if (onProgress) {
+            onProgress(percentage, file)
           }
         }
       }).then(resp => {
         console.log(resp)
-        UploadFileList(_file,{status:'success',response:resp.data})
+        UploadFileList(_file,{status:'success',response:resp.data, percent: 100})
         if (onSuccess) {
           onSuccess(resp.data,file)
         }
@@ -152,8 +176,15 @@ export const Upload = ({
       <Button
         btnType={ButtonType.Primary}
         onClick={handleClick}
+        className={drag ? 'lm-upload-dragger-host' : undefined}
       >
-        Upload File
+        {drag ? (
+          <Dragger onFile={(files) => UploadFiles(files)}>
+            {children ?? 'Upload File'}
+          </Dragger>
+        ) : (
+          children ?? 'Upload File'
+        )}
       </Button>
       <input
         className="lm-file-input"
@@ -161,6 +192,8 @@ export const Upload = ({
         style={{ display: 'none' }}
         ref={fileInput}
         onChange={handleFileChange}
+        accept={accept}
+        multiple={multiple}
       />
       <UploadList
         fileList={fileList}
