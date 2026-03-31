@@ -1,0 +1,35 @@
+.lm-form {
+  .lm-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.25rem;
+
+    &.lm-row-no-label {
+      flex-direction: row-reverse;
+    }
+
+    .lm-item-label {
+      flex-basis: 30%;
+      text-align: right;
+      padding-right: 1.25rem;
+
+      > label {
+        margin-bottom: 0;
+      }
+    }
+
+    .lm-form-item {
+      flex-basis: 70%;
+
+      .lm-input-wrapper {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .lm-form-submit-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

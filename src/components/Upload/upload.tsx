@@ -51,7 +51,7 @@ export const Upload = ({
   data,
   withCredentials,
   accept,
-  multiple,
+  multiple = true,
   children,
   drag
 }: UploadProps) => {
@@ -130,6 +130,8 @@ export const Upload = ({
       })
     }
       axios.post(action, formData, {
+        headers,
+        withCredentials,
         onUploadProgress: (e) => {
           const total = e.total && e.total > 0 ? e.total : e.loaded || 1
           let percentage = Math.round((e.loaded * 100) / total)

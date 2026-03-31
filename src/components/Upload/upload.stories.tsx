@@ -40,3 +40,26 @@ export const Basic: Story = {
     drag:true
   }
 }
+
+export const Multiple: Story = {
+  args: {
+    action: 'https://jsonplaceholder.typicode.com/posts',
+    name: 'file',
+    multiple: true,
+    accept: '.jpg,.jpeg,.png',
+    children: '上传多个文件',
+    drag: false,
+    onChange: (file) => {
+      console.log('[multiple onChange]', file.name)
+    },
+    onProgress: (percentage, file) => {
+      console.log('[multiple progress]', percentage, file.name)
+    },
+    onSuccess: (data, file) => {
+      console.log('[multiple success]', file.name, data)
+    },
+    onError: (err, file) => {
+      console.log('[multiple error]', file.name, err)
+    }
+  }
+}
