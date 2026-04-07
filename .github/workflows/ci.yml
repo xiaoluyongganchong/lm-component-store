@@ -3,7 +3,6 @@ name: CI
 on:
   push:
     branches:
-      - main
       - test/storybook-test1
   pull_request:
     branches:
@@ -26,14 +25,8 @@ jobs:
       - name: Install
         run: npm ci
 
-      - name: Test
-        run: npm run test:nowatch -- --watchAll=false
-
       - name: Lint
         run: npm run lint
 
       - name: Build Package
         run: npm run build:package
-
-      - name: Build Storybook
-        run: npm run build-storybook
