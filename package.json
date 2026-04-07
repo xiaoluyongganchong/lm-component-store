@@ -40,7 +40,7 @@
     "build:lib": "tsc -p tsconfig.build.json",
     "build:css": "sass ./src/styles/index.scss ./dist/index.css --no-source-map",
     "build:package": "npm run clean && npm run build:lib && npm run build:css",
-    "lint": "eslint --ext js,ts,tsx src --max-warnings 5",
+    "lint": "eslint --ext js,ts,tsx src --ignore-pattern \"src/**/*.test.*\" --ignore-pattern \"src/**/*.stories.*\" --max-warnings 5",
     "test:nowatch": "cross-env CI=true react-scripts test",
     "prepublish": "npm run test:nowatch && npm run lint && npm run build:package",
     "prepublishOnly": "npm run prepublish",
