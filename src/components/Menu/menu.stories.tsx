@@ -1,43 +1,55 @@
-import { AlertType } from "../Alert/alert";
-import Menu from "./menu";
+import Menu, { type MenuProps } from "./menu";
+import MenuItem from "./menuItem";
+import SubMenu from "./subMenu";
 
 const meta = {
- title: 'Components/Menu',
+  title: "Components/Menu",
   component: Menu,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
-    type: {
-      control: { type: 'select' },
-      options: [AlertType.Default, AlertType.Success, AlertType.Danger, AlertType.Warning],
+    mode: {
+      control: { type: "radio" },
+      options: ["horizontal", "vertical"],
     },
-   onselect:{ action: 'select'}
+    onSelect: { action: "select" },
   },
   args: {
-    title: '提示标题',
-    children: '这是一条提示内容',
-    type: AlertType.Default,
-    closable: true,
-  },
-}
+    defaultIndex: "0",
+    mode: "horizontal",
+    defaultOpenSubMenus: [],
+  }
+};
 
 export default meta;
 
-type Story = {
-  args?: {
-    title?: string;
-    children?: string;
-    type?: AlertType;
-    closable?: boolean;
-    onClose?: () => void;
-  };
+export const Default = {
+  render: (args: MenuProps) => (
+    <Menu {...args}>
+      <MenuItem>active</MenuItem>
+      <MenuItem>disabled</MenuItem>
+      <SubMenu title="dropdown">
+        <MenuItem>dropdown 1</MenuItem>
+        <MenuItem>dropdown 2</MenuItem>
+      </SubMenu>
+      <MenuItem>menu 4</MenuItem>
+    </Menu>
+  ),
 };
 
-export const Default: Story = {};
-
-export const Success: Story = {
+export const Success = {
   args: {
-    type: AlertType.Success,
-    title: '成功',
-    children: '操作已完成',
+    mode: "vertical",
+    defaultOpenSubMenus: ["2"],
   },
+  render: (args: MenuProps) => (
+    <Menu {...args}>
+      <MenuItem>active</MenuItem>
+      <MenuItem>item 2</MenuItem>
+      <SubMenu title="dropdown">
+        <MenuItem>dropdown 1</MenuItem>
+        <MenuItem>dropdown 2</MenuItem>
+      </SubMenu>
+      <MenuItem>menu 4</MenuItem>
+    </Menu>
+  ),
 };

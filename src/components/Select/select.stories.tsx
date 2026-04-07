@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import Select, { SelectProps } from './select'
 
 const options = [

@@ -1,7 +1,22 @@
 {
-  "name": "react-ui",
+  "name": "lm-component-store",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "main": "dist/components/index.js",
+  "module": "dist/components/index.js",
+  "types": "dist/components/index.d.ts",
+  "style": "dist/index.css",
+  "exports": {
+    ".": {
+      "types": "./dist/components/index.d.ts",
+      "import": "./dist/components/index.js",
+      "default": "./dist/components/index.js"
+    },
+    "./dist/index.css": "./dist/index.css"
+  },
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.2.0",
     "@fortawesome/free-solid-svg-icons": "^7.2.0",
@@ -10,29 +25,38 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^13.5.0",
-    "@types/classnames": "^2.3.0",
-    "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.126",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
-    "@types/react-transition-group": "^4.4.12",
+    "async-validator": "^4.2.5",
     "axios": "^1.13.6",
     "classnames": "^2.5.1",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
+    "lodash-es": "^4.17.23",
     "react-scripts": "5.0.1",
     "react-transition-group": "^4.4.5",
-    "sass": "^1.98.0",
-    "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "clean": "rimraf ./dist",
+    "build:lib": "tsc -p tsconfig.build.json",
+    "build:css": "sass ./src/styles/index.scss ./dist/index.css --no-source-map",
+    "build:package": "npm run clean && npm run build:lib && npm run build:css",
+    "lint": "eslint --ext js,ts,tsx src --max-warnings 5",
+    "test:nowatch": "cross-env CI=true react-scripts test",
+    "prepublish": "npm run test:nowatch && npm run lint && npm run build:package",
+    "prepublishOnly": "npm run prepublish",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run test:nowatch && npm run lint"
+    }
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
   },
   "eslintConfig": {
     "extends": [
@@ -59,9 +83,24 @@
     "@storybook/addon-onboarding": "^10.3.3",
     "@storybook/preset-create-react-app": "^10.3.3",
     "@storybook/react-webpack5": "^10.3.3",
+    "@types/classnames": "^2.3.0",
+    "@types/jest": "^27.5.2",
+    "@types/lodash-es": "^4.17.12",
+    "@types/node": "^16.18.126",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@types/react-transition-group": "^4.4.12",
+    "cross-env": "^10.1.0",
+    "eslint-cli": "^1.1.1",
     "eslint-plugin-storybook": "^10.3.3",
+    "husky": "^9.1.7",
     "prop-types": "^15.8.1",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "sass": "^1.98.0",
+    "rimraf": "^6.0.1",
     "storybook": "^10.3.3",
+    "typescript": "^4.9.5",
     "webpack": "^5.105.4"
   }
 }

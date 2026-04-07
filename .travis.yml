@@ -1,0 +1,20 @@
+language: node_js
+
+node_js:
+  - "stable"
+
+cache:
+  directories:
+    - node_modules
+
+env:
+  - CI=true
+
+install:
+  - npm ci
+
+script:
+  - npm run test:nowatch -- --watchAll=false
+  - npm run lint
+  - npm run build:package
+  - npm run build-storybook

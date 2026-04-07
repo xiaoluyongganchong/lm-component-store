@@ -117,7 +117,7 @@ export const Select = ({
       }
     }
 
-    const firstEnabled = getFirstEnabledIndex()
+    const firstEnabled = findEnabledFrom(0, 1)
     if (firstEnabled >= 0) setHighlightIndex(firstEnabled)
   }, [open, multiple, selectedValue, options, highlightIndex])
 

@@ -1,0 +1,32 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    /* 与 CRA 的 build 目录区分，避免 npm run build 覆盖库产物 */
+    "outDir": "dist",
+    /* 输出目录结构与 src 对齐（components/...） */
+    "rootDir": "src",
+    "module": "esnext",
+    "target": "es5",
+    /* 教程中的显式项：Node 模块解析 + 合成默认导入 */
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "declaration": true,
+    /* 便于在消费端从 .d.ts 映射回源码 */
+    "declarationMap": true,
+    /* 教程为 "react"；本仓库与 CRA 使用自动 JSX 运行时，勿改除非已为各文件补全 import React */
+    "jsx": "react-jsx",
+    "noEmit": false
+  },
+  "include": ["src/components/index.tsx"],
+  "exclude": [
+    "src/App.tsx",
+    "src/index.tsx",
+    "src/reportWebVitals.ts",
+    "src/setupTests.ts",
+    "src/**/*.test.tsx",
+    "src/**/*.test.ts",
+    "src/**/*.stories.tsx",
+    "src/**/*.stories.ts"
+  ]
+}

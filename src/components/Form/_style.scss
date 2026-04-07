@@ -16,13 +16,39 @@
       > label {
         margin-bottom: 0;
       }
+
+      > label.lm-form-item-required::before {
+        display: inline-block;
+        margin-right: 0.25rem;
+        color: $danger;
+        font-size: 0.875rem;
+        line-height: 1;
+        content: '*';
+      }
     }
 
     .lm-form-item {
       flex-basis: 70%;
+      position: relative;
 
       .lm-input-wrapper {
         margin-bottom: 0;
+      }
+
+      .lm-form-item-control.lm-form-item-has-error {
+        .lm-input-inner {
+          border: 1px solid $danger;
+
+          &:focus {
+            box-shadow: 0 0 0 0.2rem rgba($danger, 0.25);
+          }
+        }
+      }
+
+      .lm-form-item-explain {
+        margin-top: 0.375rem;
+        line-height: 1.4;
+        color: $danger;
       }
     }
   }
